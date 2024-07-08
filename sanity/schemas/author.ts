@@ -29,6 +29,7 @@ export default {
         name: 'bio',
         title: 'Bio',
         type: 'array',
+        description: 'Which movie are we screening',
         of: [
             { type: 'block' },
           ],

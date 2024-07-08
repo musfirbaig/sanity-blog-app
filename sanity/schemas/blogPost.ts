@@ -22,6 +22,9 @@ export default {
         title: 'Author',
         type: 'reference',
         to: [{ type: 'author' }],
+        options: {
+          disableNew: true,
+        }
       },
       {
         name: 'mainImage',
