@@ -58,7 +58,7 @@ export const BlogPost = ({slug} : {slug:string}) => {
 
   const myPortableTextComponents = {
     types: {
-      image: ({ value }: { value: Image }) => <img className="mx-auto" src={urlForImage(value)} />,
+      image: ({ value }: { value: Image }) => <img className="mx-auto m-6 p-5" src={urlForImage(value)} />,
     },
 
     block: {
@@ -97,7 +97,7 @@ export const BlogPost = ({slug} : {slug:string}) => {
                   src={post.mainImage?.asset.url}
                   className="w-full h-96 object-cover"
                   alt="blog image" />
-          <div className="container py-6 md:py-10 text-gray-700">
+          <div className="container py-6 md:py-10 text-gray-700 mx-auto">
             <div className="mx-auto max-w-4xl">
               <div className="">
                 <h1 className="pt-5 font-body text-3xl font-semibold text-primary sm:text-4xl md:text-5xl xl:text-6xl">
