@@ -11,17 +11,31 @@ export default {
           decorators: [{ title: 'Strong', value: 'strong' }, { title: 'Emphasis', value: 'em' }],
           annotations: [
             {
-              title: 'URL',
-              name: 'link',
+              title: 'Internal Link',
+              name: 'internalLink',
+              type: 'object',
+              fields: [
+                {
+                  title: 'Reference',
+                  name: 'reference',
+                  type: 'reference',
+                  to: [{ type: 'blogPost' }],
+                },
+              ],
+            },
+
+            {
+              title: 'External Link',
+              name: 'externalLink',
               type: 'object',
               fields: [
                 {
                   title: 'URL',
                   name: 'href',
                   type: 'url',
-                },
-              ],
-            },
+                }
+              ]
+            }
           ],
         },
       },

@@ -13,6 +13,7 @@ query GetAllBlogPosts {
     name
     }
     publishedAt
+    bodyRaw
   }
 }
 `;
