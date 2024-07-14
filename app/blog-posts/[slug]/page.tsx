@@ -1,7 +1,7 @@
 import {BlogPost} from "@/components/BlogPost";
 
-export default function BlogPostPage () {
+export default function BlogPostPage ({params}: {params: {slug: string}}) {
     return (
-        <BlogPost></BlogPost>
+        <BlogPost slug={params.slug} />
     )
 }

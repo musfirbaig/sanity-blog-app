@@ -45,9 +45,10 @@ const getBlogPostBySlug = gql
   }
 }`;
 
-export const BlogPost = () => {
+export const BlogPost = ({slug} : {slug:string}) => {
   const { loading, error, data } = useQuery(getBlogPostBySlug, {
-    variables: { slug: "ai-and-its-emerging-challanges" },
+    variables: { slug },
+    // variables: { slug: "ai-and-its-emerging-challanges" },
   });
 
   if (loading) return <p>Loading...</p>;
@@ -60,7 +61,19 @@ export const BlogPost = () => {
       image: ({ value }: { value: Image }) => <img className="mx-auto" src={urlForImage(value)} />,
     },
 
-    // block
+    block: {
+      // Ex. 1: customizing common block types
+      h1: ({children}: any) => <h1 className="text-2xl font-bold text-gray-700">{children}</h1>,
+      h2: ({children}: any) => <h2 className="text-xl font-bold text-gray-700">{children}</h2>,
+      h3: ({children}: any) => <h3 className="text-lg font-semibold text-gray-600">{children}</h3>,
+      h4: ({children}: any) => <h4 className="text-base font-semibold text-gray-600">{children}</h4>,
+      normal: ({children}: any) => <p className="text-base font-semibold text-gray-600 ">{children}</p>,
+    },
+    marks: {
+      // Ex. 1: custom renderer for the em / italics decorator
+      em: ({children}:any) => <em className="text-gray-600 font-semibold">{children}</em>,
+      strong: ({children}:any) => <strong className="text-gray-800 font-bold">{children}</strong>,
+    }
   };
 
   // const triggerNavItem = (id) => {
@@ -76,113 +89,34 @@ export const BlogPost = () => {
   return (
     <>
       <>
-        <Head>
-          <meta charSet="utf-8" />
 
-          <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
-
-          <meta
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            name="viewport"
-          />
-
-          {/* <title>{blog.title}</title> */}
-
-          <meta
-            property="og:title"
-            content="How to become a frontend developer | Atom Template"
-          />
-
-          <meta property="og:locale" content="en_US" />
-
-          <link rel="canonical" href="//post" />
-
-          <meta property="og:url" content="//post" />
-
-          <meta
-            name="description"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-          />
-
-          <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
-
-          <meta name="theme-color" content="#5540af" />
-
-          <meta property="og:site_name" content="Atom Template" />
-
-          <meta property="og:image" content="//assets/img/social.jpg" />
-
-          <meta name="twitter:card" content="summary_large_image" />
-
-          <meta name="twitter:site" content="@tailwindmade" />
-
-          <link
-            crossOrigin="anonymous"
-            href="https://fonts.gstatic.com"
-            rel="preconnect"
-          />
-
-          <link
-            as="style"
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@400;500;600;700&display=swap"
-            rel="preload"
-          />
-
-          <link
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-          />
-
-          <link
-            href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
-            rel="stylesheet"
-          />
-
-          <link
-            crossOrigin="anonymous"
-            href="/assets/styles/main.min.css"
-            media="screen"
-            rel="stylesheet"
-          />
-
-          <script
-            defer
-            src="https://unpkg.com/@alpine-collective/toolkit@1.0.0/dist/cdn.min.js"
-          ></script>
-
-          <script
-            defer
-            src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
-          ></script>
-
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/atom-one-dark.min.css"
-          />
-        </Head>
-        <NavBar />
+        
 
         <div>
-          <div className="container py-6 md:py-10">
+                <img
+                  src={post.mainImage?.asset.url}
+                  className="w-full h-96 object-cover"
+                  alt="blog image" />
+          <div className="container py-6 md:py-10 text-gray-700">
             <div className="mx-auto max-w-4xl">
               <div className="">
                 <h1 className="pt-5 font-body text-3xl font-semibold text-primary sm:text-4xl md:text-5xl xl:text-6xl">
-                  {/* {blog.title} */} Blog Title
+                  {/* {blog.title} */} {post.title}
                 </h1>
                 <div className="flex items-center pt-5 md:pt-10">
                   <div>
                     <img
-                      src="/assets/img/blog-author.jpg"
+                      src={post.author.image?.asset.url}
                       className="h-20 w-20 rounded-full border-2 border-grey-70 shadow"
                       alt="author image"
                     />
                   </div>
                   <div className="pl-5">
                     <span className="block font-body text-xl font-bold text-grey-10">
-                      By Christy Smith
+                      {post.author.name}
                     </span>
                     <span className="block pt-1 font-body text-xl font-bold text-grey-30">
-                      February 27, 2022
+                      {post._createdAt.slice(0,10)}
                     </span>
                   </div>
                 </div>
@@ -249,7 +183,9 @@ export const BlogPost = () => {
             </div>
           </div>
         </div>
-      </>{" "}
+      </>
+
+      {/* <pre>{JSON.stringify(post, null, 2)}</pre> */}
     </>
   );
 };
